@@ -25,3 +25,25 @@ function operate(operator, num1, num2) {
     return (operator(num1, num2));
 }
 // console.log(operate(multiply, 10, 2));
+
+//todo: Create the functions that populate the display when you click the number buttons... you should be storing the 'display value' in a variable somewhere for use in the next step:
+// input display with button (number or symbol that is clicked by user).
+// update the 'value' in html using selectors with the corresponding button using the 'id' of the button clicked.
+// 1. add event listener and wait for a click; 2. update the 'value' field.
+
+// const button = document.querySelectorAll('button').forEach(element => element.click());
+const userInput = []; // stores all the numbers pressed by the user.
+const button = document.querySelectorAll('button');
+const textField = document.getElementById('text-field');
+
+for (let i=0; i<button.length; i++) {
+    button[i].addEventListener('click', () => {
+        userInput.push(button[i].value); // add button input to 'userInput'.
+        textField.value = userInput;
+        // console.log(button[i]);
+    });
+}
+
+
+
+
