@@ -1,0 +1,27 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.main-container {
+    border: 2px solid black;
+    padding: 50px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#textfield {
+    height: 20px;
+    padding: 3px;
+    margin: 15px;
+    width: 34%;
+}
+
+button {
+    height: 20px;
+    width: 20px;
+    padding: 15px;
+    margin: 1.7px 0px;
+}
