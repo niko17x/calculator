@@ -32,18 +32,18 @@ function operate(operator, num1, num2) {
 // 1. add event listener and wait for a click; 2. update the 'value' field.
 
 // const button = document.querySelectorAll('button').forEach(element => element.click());
-const userInput = []; // stores all the numbers pressed by the user.
+let userInput = []; // stores all the numbers pressed by the user.    
 const button = document.querySelectorAll('button');
 const textField = document.getElementById('text-field');
 
-for (let i=0; i<button.length; i++) {
-    button[i].addEventListener('click', () => {
-        userInput.push(button[i].value); // add button input to 'userInput'.
-        textField.value = userInput;
-        // console.log(button[i]);
-    });
-}
+function buttonInput() {
+    for (let i=0; i<button.length; i++) {
+        button[i].addEventListener('click', () => {
+            userInput.push(button[i].value); // add button input to 'userInput'.
+            // console.log(button[i]);
+            textField.value = userInput.join(""); // removes all commas from 'userInput' array.
+        });
+    }
+}    
 
-
-
-
+buttonInput();
