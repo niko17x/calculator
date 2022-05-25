@@ -36,14 +36,18 @@ let userInput = []; // stores all the numbers pressed by the user.
 const button = document.querySelectorAll('button');
 const textField = document.getElementById('text-field');
 
+const numberRange = [...Array(10).keys()];
+
 function buttonInput() {
     for (let i=0; i<button.length; i++) {
-        button[i].addEventListener('click', () => {
-            userInput.push(button[i].value); // add button input to 'userInput'.
-            // console.log(button[i]);
-            textField.value = userInput.join(""); // removes all commas from 'userInput' array.
-        });
+        // console.log(typeof button[i].value);
+        if (button[i].value in numberRange) { // if clicked button is an integer...
+            button[i].addEventListener('click', () => {
+                userInput.push(button[i].value); // add button input to 'userInput'.
+                // console.log(button[i]);
+                textField.value = userInput.join(""); // removes all commas from 'userInput' array.
+            });
+        }
     }
 }    
-
 buttonInput();
