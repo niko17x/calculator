@@ -5,7 +5,7 @@ const add = function add(...num) { // using ES6 'Rest Parameter' to take in n nu
         return (total + current);
     })
 }
-// console.log(add([12],[12]))
+
 
 const subtract = function subtract(...num) {
     return num.reduce((total, current) => {
@@ -22,11 +22,16 @@ const multiply = function multiply(...num) {
 // console.log(multiply(5, 5)); // 25
 
 const divide = function divide(...num) {
-    return num.reduce((total, current) => {
-        return (total / current);
-    })
+    if (num[0] === 0) {
+        return ("No dividing by 0.");
+    } else {
+        return num.reduce((total, current) => {
+            return (total / current);
+        })
+    }
 }
-// console.log(divide(10, 2, 2, 10)); // 5
+// console.log(divide(0, 2)) // 'No dividing by 0.'
+
 
 //todo: Create a new function 'operate' that takes an operator and 2 numbers and then calls one of the above functions on the numbers:
 function operate(operator, num1, num2) {
@@ -34,13 +39,8 @@ function operate(operator, num1, num2) {
 }
 // console.log(operate(multiply, 10, 2));
 
-//todo: Create the functions that populate the display when you click the number buttons... you should be storing the 'display value' in a variable somewhere for use in the next step:
-// input display with button (number or symbol that is clicked by user).
-// update the 'value' in html using selectors with the corresponding button using the 'id' of the button clicked.
-// 1. add event listener and wait for a click; 2. update the 'value' field.
 
-// const button = document.querySelectorAll('button').forEach(element => element.click());
-let userInput = []; // stores all the numbers pressed by the user.    
+
 const numberRange = [...Array(10).keys()]; // range of numbers in array.
 const button = document.querySelectorAll('button');
 const textField = document.getElementById('text-field');
@@ -54,11 +54,7 @@ const clearSym = document.getElementById('clear');
 
 
 
-const buttonInput = [
-    {num: []},
-    {num: 10},
-    {operator: 'add'},
-];
+const buttonInput = []; // variable that hold the property objects.
 // console.log(obj1[0].num + obj1[1].num);
 // const b = buttonInput[0].num = 12; // updating object value.
 // console.log(b)
@@ -67,86 +63,105 @@ const buttonInput = [
 
 
 
-//todo: figure out how to check if 'operator' is IN the object so you can validate if the user has clicked on an operator button on the calculator:
-const result1 = buttonInput.flatMap(Object.keys);
-console.log(result1);
 
-if ('operator' in result1) {
-    console.log('true');
-} else {
-    console.log('false');
+// iterator through Object Array 'buttonInput' and splice 'operator' key:
+// note: using 'delete' to remove an object only removes the properties but total length remains the same.
+function deleteOperator() {
+    for (let i=0; i<buttonInput.length; i++) {
+        if ('operator' in buttonInput[i]) {
+            return buttonInput.splice(2, 1);
+        };
+    }
 }
 
-// if (buttonInput.operator) {
-//     console.log('true');
-// } else {
-//     console.log('false');
-// }
-
-
-
-
-
+let inputCounter = 0;
+let inputResult = 0;
 
 function numberInput() {
     for (let i=0; i<button.length; i++) {
         button[i].addEventListener('click', () => {
+            if (button[i].id === 'clear') {
+                inputCounter = 0;
+                buttonInput[0].num = [];
+                buttonInput[1].num = [];
+                deleteOperator();
+                // deleteUndefined();
+                textField.value = 0;
+            };
             if (button[i].value in numberRange) {
-                if (!operatorCheck()) { // if there is no 'symbol' in array.
+                if (buttonInput.length === 3) { // alternate method using function.
                     // userInput.push(parseInt(button[i].value));
                     buttonInput[0].num.push(button[i].value);
                     // textField.value = userInput.join("");
                     textField.value = buttonInput[0].num.join("");
                 } else { // if a 'symbol' is detected...
                     buttonInput[1].num.push(button[i].value);
-                    textField.value = buttonInput[i].num.join("");
+                    textField.value = buttonInput[1].num.join("");
                 }
-                console.log(buttonInput[0].num);
-                console.log(buttonInput[1].num);
-            } 
+                // console.log(buttonInput[0].num);
+                // console.log(buttonInput[1].num);
+            };
             if (button[i].id === 'add') {
                 textField.value = (button[i].value);
-                // const operator = 'operator'; //? var not being used - do I even need this?
-                buttonInput[2] = {operator: "add"} // add new object inside array.
-
-            } 
+                buttonInput[2] = {operator: "add"}; // add new object inside array.
+            };
+            if (button[i].id === 'subtract') {
+                textField.value = (button[i].value);
+                buttonInput[2] = {operator: "subtract"};
+            };
+            if (button[i].id === 'multiply') {
+                textField.value = (button[i].value);
+                buttonInput[2] = {operator: "multiply"};
+            };
+            if (button[i].id === 'divide') {
+                textField.value = (button[i].value);
+                buttonInput[2] = {operator: "divide"};
+            };
             if (button[i].id === 'equal') {
-                return equalOperator();
-            }
-        })
+                textField.value = equalsOperator();
+                return equalsOperator();
+            };
+            console.log("buttonInput Object: ", buttonInput);
+            console.log("index 0: ", buttonInput[0].num);
+            console.log("index 1: ", buttonInput[1].num);
+            console.log("buttonInput length: ", buttonInput.length);
+        }); 
     };
-    // textField.value = userInput;
-}  
+};
 numberInput();
 
 
 
-//todo: need to update - function doesn't run properly since we need to update the 'buttonInput' array with the proper operators first:
+
+
 // function if user clicks on 'equals' operator (note: try changing this to a switch operator):
+// if user clicks equal button, code will take the operator and operate on both arrays:
 function equalsOperator() {
-    if ('operator' in buttonInput) {
-        if (buttonInput.operator === 'add') {
-            return add(buttonInput[0], buttonInput[1]);
-        };
-        if (buttonInput.operator === 'subtract') {
-            return subtract(buttonInput[0], buttonInput[1]);
-        };
-        if (buttonInput.operator === 'subtract') {
-            return multiply(buttonInput[0], buttonInput[1]);
-        };
-        if (buttonInput.operator === 'divide') {
-            return divide(buttonInput[0], buttonInput[1]);
+    for (let i=0; i<buttonInput.length; i++) {
+        let ans = 0;
+        if ('operator' in buttonInput[i]) { // check if 'operator' in the object array.
+            if (buttonInput[i].operator === 'add') { // check for type of operator.
+                ans = add(parseInt(buttonInput[0].num.join("")), parseInt(buttonInput[1].num.join("")));
+                return (ans);
+            };
+            if (buttonInput[i].operator === 'subtract') {
+                return subtract(parseInt(buttonInput[0].num.join("")), parseInt(buttonInput[1].num.join("")));
+            };
+            if (buttonInput[i].operator === 'multiply') {
+                return multiply(parseInt(buttonInput[0].num.join("")), parseInt(buttonInput[1].num.join("")));
+            };
+            if (buttonInput[i].operator === 'divide') {
+                return divide(parseInt(buttonInput[0].num.join("")), parseInt(buttonInput[1].num.join("")));
+            };
         };
     };
 };
 
 
-
-
-// check if 'symbol' exists within array object:
-function operatorCheck() {
+//? This function currently not being used.
+// check if 'operator' is a property in the object array:
+function arrayCheck() {
     for (let i=0; i<buttonInput.length; i++) {
-        if ('symbol' in buttonInput[i]) return true;
+        if ('operator' in buttonInput[i]) return true;
     };
-    return false;
 };
