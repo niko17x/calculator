@@ -68,13 +68,13 @@ function deleteOperator() {
 let inputCounter = 0;
 let inputResult = 0;
 const buttonInput = [
-    {input: 1},
-    {input: 2},
-    {input: 3},
+    // {input: 1},
+    // {input: 2},
+    // {input: 3},
 ];
 // console.log(buttonInput[buttonInput.length-1].value); => get last property from array.
 // buttonInput.push({input: 4}); => add new object into array.
-console.log(Object.values(buttonInput[0]));
+// console.log(Object.values(buttonInput[0])); => get object value.
 
 
 
@@ -93,10 +93,11 @@ function numberInput() {
             if (button[i].value in numberRange) {
                 if (buttonInput.length === 0) { // first input in array.
                     // userInput.push(parseInt(button[i].value));
-                    buttonInput[inputCounter].input = button[i].value;
+                    buttonInput.push({input: button[i].value});
                     // buttonInput[0].num.push(button[i].value);
                     // textField.value = userInput.join("");
-                    textField.value = buttonInput[0].num.join("");
+                    // textField.value = buttonInput[0].num.join("");
+                    textField.value = buttonInput[buttonInput.length-1].value;
                 } else { // if a 'symbol' is detected...
                     buttonInput[1].num.push(button[i].value);
                     textField.value = buttonInput[1].num.join("");
@@ -131,7 +132,7 @@ function numberInput() {
         }); 
     };
 };
-// numberInput();
+numberInput();
 
 
 
