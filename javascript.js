@@ -54,14 +54,6 @@ const clearSym = document.getElementById('clear');
 
 
 
-const buttonInput = []; // variable that hold the property objects.
-// console.log(obj1[0].num + obj1[1].num);
-// const b = buttonInput[0].num = 12; // updating object value.
-// console.log(b)
-// console.log(add(buttonInput[0].num, buttonInput[1].num)) // calling add function on object.
-// console.log(add(buttonInput[0].num));
-
-
 
 
 // iterator through Object Array 'buttonInput' and splice 'operator' key:
@@ -73,9 +65,19 @@ function deleteOperator() {
         };
     }
 }
-
 let inputCounter = 0;
 let inputResult = 0;
+const buttonInput = [
+    {input: 1},
+    {input: 2},
+    {input: 3},
+];
+// console.log(buttonInput[buttonInput.length-1].value); => get last property from array.
+// buttonInput.push({input: 4}); => add new object into array.
+console.log(Object.values(buttonInput[0]));
+
+
+
 
 function numberInput() {
     for (let i=0; i<button.length; i++) {
@@ -89,9 +91,10 @@ function numberInput() {
                 textField.value = 0;
             };
             if (button[i].value in numberRange) {
-                if (buttonInput.length === 3) { // alternate method using function.
+                if (buttonInput.length === 0) { // first input in array.
                     // userInput.push(parseInt(button[i].value));
-                    buttonInput[0].num.push(button[i].value);
+                    buttonInput[inputCounter].input = button[i].value;
+                    // buttonInput[0].num.push(button[i].value);
                     // textField.value = userInput.join("");
                     textField.value = buttonInput[0].num.join("");
                 } else { // if a 'symbol' is detected...
@@ -128,7 +131,7 @@ function numberInput() {
         }); 
     };
 };
-numberInput();
+// numberInput();
 
 
 
