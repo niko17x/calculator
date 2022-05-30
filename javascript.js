@@ -65,13 +65,36 @@ function deleteOperator() {
         };
     }
 }
-let inputCounter = 0;
-let inputResult = 0;
-const buttonInput = [
-    // {input: 1},
-    // {input: 2},
-    // {input: 3},
-];
+
+
+
+// const buttonInput = [
+//     {input1: 0},
+//     {input2: []},
+// ];
+let buttonInput = {input1: [], input2: []};
+// console.log(buttonInput);
+// const d = (parseInt(buttonInput.input1.join("")) + parseInt(buttonInput.input2.join("")));
+// console.log(d);
+
+
+
+
+// arr1 = [1, 2, 3];
+// arr2 = [1, 2, 3];
+// (buttonInput.input1 = parseInt(arr1.join("")));
+// buttonInput.input2 = parseInt(arr2.join(""));
+// console.log(buttonInput.input1 + buttonInput.input2);
+// buttonInput.operator = 'add';
+// console.log(buttonInput);
+// if (buttonInput.hasOwnProperty('operator')) {
+//     console.log('true');
+// }
+
+
+
+
+// console.log(!buttonInput[buttonInput.length-1].hasOwnProperty('operator'));
 // console.log(buttonInput[buttonInput.length-1].value); => get last property from array.
 // buttonInput.push({input: 4}); => add new object into array.
 // console.log(Object.values(buttonInput[0])); => get object value.
@@ -79,84 +102,91 @@ const buttonInput = [
 
 
 
+
+
+
+let result = 0;
+
+numberInput();
 function numberInput() {
     for (let i=0; i<button.length; i++) {
         button[i].addEventListener('click', () => {
-            if (button[i].id === 'clear') {
-                inputCounter = 0;
-                buttonInput[0].num = [];
-                buttonInput[1].num = [];
-                deleteOperator();
-                // deleteUndefined();
-                textField.value = 0;
-            };
             if (button[i].value in numberRange) {
-                if (buttonInput.length === 0) { // first input in array.
-                    // userInput.push(parseInt(button[i].value));
-                    buttonInput.push({input: button[i].value});
-                    // buttonInput[0].num.push(button[i].value);
-                    // textField.value = userInput.join("");
-                    // textField.value = buttonInput[0].num.join("");
-                    textField.value = buttonInput[buttonInput.length-1].value;
-                } else { // if a 'symbol' is detected...
-                    buttonInput[1].num.push(button[i].value);
-                    textField.value = buttonInput[1].num.join("");
-                }
-                // console.log(buttonInput[0].num);
-                // console.log(buttonInput[1].num);
-            };
+                if (!iterObj()) {
+                    buttonInput.input1.push(parseInt(button[i].value));
+                    textField.value = buttonInput.input1.join("");
+                } else {
+                    buttonInput.input2.push(parseInt(button[i].value));
+                    textField.value = buttonInput.input2.join("");
+                };
+
+            };            
             if (button[i].id === 'add') {
                 textField.value = (button[i].value);
-                buttonInput[2] = {operator: "add"}; // add new object inside array.
+                buttonInput.operator = 'add'; //? why do I need this?
             };
             if (button[i].id === 'subtract') {
                 textField.value = (button[i].value);
-                buttonInput[2] = {operator: "subtract"};
+                buttonInput.operator = 'subtract';
             };
             if (button[i].id === 'multiply') {
                 textField.value = (button[i].value);
-                buttonInput[2] = {operator: "multiply"};
+                buttonInput.operator = 'multiply';
             };
             if (button[i].id === 'divide') {
                 textField.value = (button[i].value);
-                buttonInput[2] = {operator: "divide"};
+                buttonInput.operator = 'divide';
             };
             if (button[i].id === 'equal') {
-                textField.value = equalsOperator();
-                return equalsOperator();
+                // textField.value = equalsOperator();
+                // return equalsOperator();
+                // result = operate(operator, parseInt(buttonInput.input1.join("")) + parseInt(buttonInput.input2.join("")));
+                result = equalsOperator();
+                textField.value = result;
+                return result;
             };
-            console.log("buttonInput Object: ", buttonInput);
-            console.log("index 0: ", buttonInput[0].num);
-            console.log("index 1: ", buttonInput[1].num);
-            console.log("buttonInput length: ", buttonInput.length);
-        }); 
+            if (button[i].id === 'clear') {
+                deleteOperator();
+                buttonInput = {input1: [], input2: []};
+                textField.value = 0;
+            };
+            console.log("");
+            console.log(buttonInput.input1);
+            console.log(buttonInput.input2);
+            console.log(buttonInput);
+            
+        });
     };
 };
-numberInput();
 
 
+
+
+// helper function to iterate through values inside object array:
+function iterObj() {
+    if ('operator' in buttonInput) {
+        return (true);
+    };
+};
 
 
 
 // function if user clicks on 'equals' operator (note: try changing this to a switch operator):
 // if user clicks equal button, code will take the operator and operate on both arrays:
 function equalsOperator() {
-    for (let i=0; i<buttonInput.length; i++) {
-        let ans = 0;
-        if ('operator' in buttonInput[i]) { // check if 'operator' in the object array.
-            if (buttonInput[i].operator === 'add') { // check for type of operator.
-                ans = add(parseInt(buttonInput[0].num.join("")), parseInt(buttonInput[1].num.join("")));
-                return (ans);
-            };
-            if (buttonInput[i].operator === 'subtract') {
-                return subtract(parseInt(buttonInput[0].num.join("")), parseInt(buttonInput[1].num.join("")));
-            };
-            if (buttonInput[i].operator === 'multiply') {
-                return multiply(parseInt(buttonInput[0].num.join("")), parseInt(buttonInput[1].num.join("")));
-            };
-            if (buttonInput[i].operator === 'divide') {
-                return divide(parseInt(buttonInput[0].num.join("")), parseInt(buttonInput[1].num.join("")));
-            };
+    let ans = 0;
+    if ('operator' in buttonInput) { // check if 'operator' in the object array.
+        if (buttonInput.operator === 'add') { // check for type of operator.
+            return add(parseInt(buttonInput.input1.join("")), parseInt(buttonInput.input2.join("")));
+        };
+        if (buttonInput.operator === 'subtract') {
+            return subtract(parseInt(buttonInput.input1.join("")), parseInt(buttonInput.input2.join("")));
+        };
+        if (buttonInput.operator === 'multiply') {
+            return multiply(parseInt(buttonInput.input1.join("")), parseInt(buttonInput.input2.join("")));
+        };
+        if (buttonInput.operator === 'divide') {
+            return divide(parseInt(buttonInput.input1.join("")), parseInt(buttonInput.input2.join("")));
         };
     };
 };
@@ -169,3 +199,35 @@ function arrayCheck() {
         if ('operator' in buttonInput[i]) return true;
     };
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
