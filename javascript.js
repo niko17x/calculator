@@ -52,60 +52,18 @@ const divideSym = document.getElementById('divide');
 const equalSym = document.getElementById('equal');
 const clearSym = document.getElementById('clear');
 
-
-
-
-
-// iterator through Object Array 'buttonInput' and splice 'operator' key:
-// note: using 'delete' to remove an object only removes the properties but total length remains the same.
-function deleteOperator() {
-    for (let i=0; i<buttonInput.length; i++) {
-        if ('operator' in buttonInput[i]) {
-            return buttonInput.splice(2, 1);
-        };
-    }
-}
-
-
-
-// const buttonInput = [
-//     {input1: 0},
-//     {input2: []},
-// ];
 let buttonInput = {input1: [], input2: []};
-// console.log(buttonInput);
-// const d = (parseInt(buttonInput.input1.join("")) + parseInt(buttonInput.input2.join("")));
-// console.log(d);
 
-
-
-
-// arr1 = [1, 2, 3];
-// arr2 = [1, 2, 3];
-// (buttonInput.input1 = parseInt(arr1.join("")));
-// buttonInput.input2 = parseInt(arr2.join(""));
-// console.log(buttonInput.input1 + buttonInput.input2);
-// buttonInput.operator = 'add';
-// console.log(buttonInput);
-// if (buttonInput.hasOwnProperty('operator')) {
-//     console.log('true');
-// }
-
-
-
-
-// console.log(!buttonInput[buttonInput.length-1].hasOwnProperty('operator'));
-// console.log(buttonInput[buttonInput.length-1].value); => get last property from array.
-// buttonInput.push({input: 4}); => add new object into array.
-// console.log(Object.values(buttonInput[0])); => get object value.
-
-
-
-
-
-
-
+let ans = 0;
 let result = 0;
+
+
+function alpha(operator) {
+    if (buttonInput.input1 && buttonInput.input2) {
+        return (operate(operator, parseInt(buttonInput.input1.join(""), parseInt(buttonInput2.input2.join("")))));
+    };
+};
+
 
 numberInput();
 function numberInput() {
@@ -123,7 +81,9 @@ function numberInput() {
             };            
             if (button[i].id === 'add') {
                 textField.value = (button[i].value);
-                buttonInput.operator = 'add'; //? why do I need this?
+                buttonInput.operator = 'add';
+                result = alpha(add);
+
             };
             if (button[i].id === 'subtract') {
                 textField.value = (button[i].value);
@@ -143,18 +103,18 @@ function numberInput() {
                 // result = operate(operator, parseInt(buttonInput.input1.join("")) + parseInt(buttonInput.input2.join("")));
                 result = equalsOperator();
                 textField.value = result;
+                buttonInput.input1 = [result];
+                buttonInput.input2 = [];
                 return result;
             };
             if (button[i].id === 'clear') {
-                deleteOperator();
                 buttonInput = {input1: [], input2: []};
                 textField.value = 0;
             };
             console.log("");
             console.log(buttonInput.input1);
             console.log(buttonInput.input2);
-            console.log(buttonInput);
-            
+            console.log(buttonInput);            
         });
     };
 };
@@ -191,14 +151,6 @@ function equalsOperator() {
     };
 };
 
-
-//? This function currently not being used.
-// check if 'operator' is a property in the object array:
-function arrayCheck() {
-    for (let i=0; i<buttonInput.length; i++) {
-        if ('operator' in buttonInput[i]) return true;
-    };
-};
 
 
 
