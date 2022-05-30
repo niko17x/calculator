@@ -6,7 +6,6 @@ const add = function add(...num) { // using ES6 'Rest Parameter' to take in n nu
     })
 }
 
-
 const subtract = function subtract(...num) {
     return num.reduce((total, current) => {
         return (total - current);
@@ -33,12 +32,10 @@ const divide = function divide(...num) {
 // console.log(divide(0, 2)) // 'No dividing by 0.'
 
 
-//todo: Create a new function 'operate' that takes an operator and 2 numbers and then calls one of the above functions on the numbers:
-function operate(operator, num1, num2) {
-    return (operator(num1, num2));
+function calculate(operator, num1, num2) {
+    return operator(num1, num2);
 }
-// console.log(operate(multiply, 10, 2));
-
+// console.log(calculate(add, 10, 2));
 
 
 const numberRange = [...Array(10).keys()]; // range of numbers in array.
@@ -53,16 +50,32 @@ const equalSym = document.getElementById('equal');
 const clearSym = document.getElementById('clear');
 
 let buttonInput = {input1: [], input2: []};
+// console.log(Object.keys(buttonInput).length)
+
+const x = Object.keys(buttonInput.input2).length === 0;
+// console.log(x);
 
 let ans = 0;
 let result = 0;
+const convertInput1Num = (parseInt(buttonInput.input1.join("")));
+const convertInput2Num = (parseInt(buttonInput.input2.join("")));
 
 
-function alpha(operator) {
-    if (buttonInput.input1 && buttonInput.input2) {
-        return (operate(operator, parseInt(buttonInput.input1.join(""), parseInt(buttonInput2.input2.join("")))));
+//todo: Issue - when chaining multiple operators, the result is buttonInput.input2 array is just getting longer instead of doing the actual calculation. The second time the user pushes an operator button should result in the result on the display and input1 should be the result.
+
+function getCalc(symbol) {
+    if (Object.keys(buttonInput.input2).length > 0) {
+        console.log(convertInput1Num);
+        console.log(convertInput1Num);
+        result = calculate(symbol, convertInput1Num, convertInput2Num);
+        buttonInput.input1 = [result];
+        buttonInput.input2 = []; // reset input2.
+        textField.value = result; // display updated result.
+        return result;
     };
 };
+
+
 
 
 numberInput();
@@ -82,7 +95,16 @@ function numberInput() {
             if (button[i].id === 'add') {
                 textField.value = (button[i].value);
                 buttonInput.operator = 'add';
-                result = alpha(add);
+                getCalc(add);
+                // if (Object.keys(buttonInput.input2).length > 0) {
+                //     result = (parseInt(buttonInput.input1.join("")) + parseInt(buttonInput.input2.join("")));
+                //     buttonInput.input1 = [result];
+                //     buttonInput.input2 = [];
+                //     textField.value = result;
+                //     return result;
+                // } else {
+                //     console.log('not working');
+                // }
 
             };
             if (button[i].id === 'subtract') {
@@ -111,10 +133,12 @@ function numberInput() {
                 buttonInput = {input1: [], input2: []};
                 textField.value = 0;
             };
+
             console.log("");
-            console.log(buttonInput.input1);
-            console.log(buttonInput.input2);
-            console.log(buttonInput);            
+            console.log("buttonInput.input1: ", buttonInput.input1);
+            console.log("buttonInput.input2: ", buttonInput.input2);
+            console.log("buttonInput.operator: ", buttonInput.operator);
+            console.log("buttonInput Object: ", buttonInput);            
         });
     };
 };
