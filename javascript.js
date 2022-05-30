@@ -33,9 +33,13 @@ const divide = function divide(...num) {
 
 
 function calculate(operator, num1, num2) {
-    return operator(num1, num2);
+    if (operator === 'add') return add(num1, num2);
+    if (operator === 'subtract') return subtract(num1, num2);
+    if (operator === 'multiply') return multiply(num1, num2);
+    if (operator === 'divide') return divide(num1, num2);
 }
-// console.log(calculate(add, 10, 2));
+// console.log(calculate(multiply, 10, 2));
+
 
 
 const numberRange = [...Array(10).keys()]; // range of numbers in array.
@@ -50,10 +54,6 @@ const equalSym = document.getElementById('equal');
 const clearSym = document.getElementById('clear');
 
 let buttonInput = {input1: [], input2: []};
-// console.log(Object.keys(buttonInput).length)
-
-const x = Object.keys(buttonInput.input2).length === 0;
-// console.log(x);
 
 let ans = 0;
 let result = 0;
@@ -61,17 +61,13 @@ const convertInput1Num = (parseInt(buttonInput.input1.join("")));
 const convertInput2Num = (parseInt(buttonInput.input2.join("")));
 
 
-//todo: Issue - when chaining multiple operators, the result is buttonInput.input2 array is just getting longer instead of doing the actual calculation. The second time the user pushes an operator button should result in the result on the display and input1 should be the result.
 
-function getCalc(symbol) {
+function getCalc(operator) {
     if (Object.keys(buttonInput.input2).length > 0) {
-        console.log(convertInput1Num);
-        console.log(convertInput1Num);
-        result = calculate(symbol, convertInput1Num, convertInput2Num);
+        result = calculate(operator, (parseInt(buttonInput.input1.join(""))), (parseInt(buttonInput.input2.join(""))));
         buttonInput.input1 = [result];
         buttonInput.input2 = []; // reset input2.
         textField.value = result; // display updated result.
-        return result;
     };
 };
 
@@ -94,35 +90,25 @@ function numberInput() {
             };            
             if (button[i].id === 'add') {
                 textField.value = (button[i].value);
+                getCalc(buttonInput.operator);
                 buttonInput.operator = 'add';
-                getCalc(add);
-                // if (Object.keys(buttonInput.input2).length > 0) {
-                //     result = (parseInt(buttonInput.input1.join("")) + parseInt(buttonInput.input2.join("")));
-                //     buttonInput.input1 = [result];
-                //     buttonInput.input2 = [];
-                //     textField.value = result;
-                //     return result;
-                // } else {
-                //     console.log('not working');
-                // }
-
             };
             if (button[i].id === 'subtract') {
                 textField.value = (button[i].value);
+                getCalc(buttonInput.operator);
                 buttonInput.operator = 'subtract';
             };
             if (button[i].id === 'multiply') {
                 textField.value = (button[i].value);
+                getCalc(buttonInput.operator);
                 buttonInput.operator = 'multiply';
             };
             if (button[i].id === 'divide') {
                 textField.value = (button[i].value);
+                getCalc(buttonInput.operator);
                 buttonInput.operator = 'divide';
             };
             if (button[i].id === 'equal') {
-                // textField.value = equalsOperator();
-                // return equalsOperator();
-                // result = operate(operator, parseInt(buttonInput.input1.join("")) + parseInt(buttonInput.input2.join("")));
                 result = equalsOperator();
                 textField.value = result;
                 buttonInput.input1 = [result];
@@ -158,7 +144,9 @@ function iterObj() {
 // function if user clicks on 'equals' operator (note: try changing this to a switch operator):
 // if user clicks equal button, code will take the operator and operate on both arrays:
 function equalsOperator() {
-    let ans = 0;
+    if (!buttonInput.input1 || !buttonInput.input2) {
+        return "";
+    };
     if ('operator' in buttonInput) { // check if 'operator' in the object array.
         if (buttonInput.operator === 'add') { // check for type of operator.
             return add(parseInt(buttonInput.input1.join("")), parseInt(buttonInput.input2.join("")));
@@ -174,36 +162,3 @@ function equalsOperator() {
         };
     };
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
