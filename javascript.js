@@ -42,10 +42,8 @@ function calculate(operator, num1, num2) {
 
 
 
-const numberRange = [...Array(10).keys()]; // range of numbers in array.
 const button = document.querySelectorAll('button');
 const textField = document.getElementById('text-field');
-
 const addSym = document.getElementById('add');
 const subtractSym = document.getElementById('subtract');
 const multiplySym = document.getElementById('multiply');
@@ -53,13 +51,10 @@ const divideSym = document.getElementById('divide');
 const equalSym = document.getElementById('equal');
 const clearSym = document.getElementById('clear');
 
+const numberRange = [...Array(10).keys()]; // range of numbers in array (1 - 9).
 let buttonInput = {input1: [], input2: []};
-
 let ans = 0;
 let result = 0;
-const convertInput1Num = (parseInt(buttonInput.input1.join("")));
-const convertInput2Num = (parseInt(buttonInput.input2.join("")));
-
 
 
 function getCalc(operator) {
@@ -73,21 +68,21 @@ function getCalc(operator) {
 
 
 
-
 numberInput();
 function numberInput() {
     for (let i=0; i<button.length; i++) {
         button[i].addEventListener('click', () => {
             if (button[i].value in numberRange) {
                 if (!iterObj()) {
-                    buttonInput.input1.push(parseInt(button[i].value));
+                    buttonInput.input1.push(parseInt(button[i].value)); // mouse click event.
+                    console.log(typeof button[i].value);
                     textField.value = buttonInput.input1.join("");
                 } else {
                     buttonInput.input2.push(parseInt(button[i].value));
+
                     textField.value = buttonInput.input2.join("");
                 };
-
-            };            
+            };
             if (button[i].id === 'add') {
                 textField.value = (button[i].value);
                 getCalc(buttonInput.operator);
@@ -119,15 +114,23 @@ function numberInput() {
                 buttonInput = {input1: [], input2: []};
                 textField.value = 0;
             };
-            // console.log("");
-            // console.log("buttonInput.input1: ", buttonInput.input1);
-            // console.log("buttonInput.input2: ", buttonInput.input2);
-            // console.log("buttonInput.operator: ", buttonInput.operator);
-            // console.log("buttonInput Object: ", buttonInput);            
+            console.log("");
+            console.log("buttonInput.input1: ", buttonInput.input1);
+            console.log("buttonInput.input2: ", buttonInput.input2);
+            console.log("buttonInput.operator: ", buttonInput.operator);
+            console.log("buttonInput Object: ", buttonInput);            
         });
     };
 };
 
+
+// keyboard event:
+/**
+ * Press on number on keyboard.
+ * Registers a return of the number associated with the keyboard press.
+ * Number then gets stored inside buttonInput.input.
+ * 
+ */
 
 
 
@@ -161,3 +164,27 @@ function equalsOperator() {
     };
     return ("Invalid");
 };
+
+
+
+//! TESTING AREA:
+
+document.addEventListener('keydown', (event) => {
+    if (event.key == "0") {document.body.append("0")}
+    else if (event.key === "1") {return '1'}
+    else if (event.key === "2") {return '2'}
+    else if (event.key === "3") {return '3'}
+    else if (event.key === "4") {return '4'}
+    else if (event.key === "5") {return '5'}
+    else if (event.key === "6") {return '6'}
+    else if (event.key === "7") {return '7'}
+    else if (event.key === "8") {return '8'}
+    else if (event.key === "9") {return '9'}
+    else if (event.key === "+") {return 'add'}
+    else if (event.key === "-") {return 'subtract'}
+    else if (event.key === "*") {return 'multiply'}
+    else if (event.key === "/") {return 'divide'}
+});
+
+
+
