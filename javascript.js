@@ -119,12 +119,11 @@ function numberInput() {
                 buttonInput = {input1: [], input2: []};
                 textField.value = 0;
             };
-
-            console.log("");
-            console.log("buttonInput.input1: ", buttonInput.input1);
-            console.log("buttonInput.input2: ", buttonInput.input2);
-            console.log("buttonInput.operator: ", buttonInput.operator);
-            console.log("buttonInput Object: ", buttonInput);            
+            // console.log("");
+            // console.log("buttonInput.input1: ", buttonInput.input1);
+            // console.log("buttonInput.input2: ", buttonInput.input2);
+            // console.log("buttonInput.operator: ", buttonInput.operator);
+            // console.log("buttonInput Object: ", buttonInput);            
         });
     };
 };
@@ -144,21 +143,21 @@ function iterObj() {
 // function if user clicks on 'equals' operator (note: try changing this to a switch operator):
 // if user clicks equal button, code will take the operator and operate on both arrays:
 function equalsOperator() {
-    if (!buttonInput.input1 || !buttonInput.input2) {
-        return "";
+    if (buttonInput.input1 || buttonInput.input2) { // => if input1 and input2 is NOT empty...
+        if ('operator' in buttonInput) { // check if 'operator' in the object array.
+            if (buttonInput.operator === 'add') { // check for type of operator.
+                return add(parseInt(buttonInput.input1.join("")), parseInt(buttonInput.input2.join("")));
+            };
+            if (buttonInput.operator === 'subtract') {
+                return subtract(parseInt(buttonInput.input1.join("")), parseInt(buttonInput.input2.join("")));
+            };
+            if (buttonInput.operator === 'multiply') {
+                return multiply(parseInt(buttonInput.input1.join("")), parseInt(buttonInput.input2.join("")));
+            };
+            if (buttonInput.operator === 'divide') {
+                return divide(parseInt(buttonInput.input1.join("")), parseInt(buttonInput.input2.join("")));
+            };
+        };
     };
-    if ('operator' in buttonInput) { // check if 'operator' in the object array.
-        if (buttonInput.operator === 'add') { // check for type of operator.
-            return add(parseInt(buttonInput.input1.join("")), parseInt(buttonInput.input2.join("")));
-        };
-        if (buttonInput.operator === 'subtract') {
-            return subtract(parseInt(buttonInput.input1.join("")), parseInt(buttonInput.input2.join("")));
-        };
-        if (buttonInput.operator === 'multiply') {
-            return multiply(parseInt(buttonInput.input1.join("")), parseInt(buttonInput.input2.join("")));
-        };
-        if (buttonInput.operator === 'divide') {
-            return divide(parseInt(buttonInput.input1.join("")), parseInt(buttonInput.input2.join("")));
-        };
-    };
+    return ("Invalid");
 };
