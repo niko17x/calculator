@@ -67,21 +67,18 @@ function getCalc(operator) {
 };
 
 
-
-numberInput();
-function numberInput() {
+function clickInput() {
     for (let i=0; i<button.length; i++) {
         button[i].addEventListener('click', () => {
             if (button[i].value in numberRange) {
                 if (!iterObj()) {
                     buttonInput.input1.push(parseInt(button[i].value)); // mouse click event.
-                    console.log(typeof button[i].value);
                     textField.value = buttonInput.input1.join("");
                 } else {
                     buttonInput.input2.push(parseInt(button[i].value));
-
                     textField.value = buttonInput.input2.join("");
                 };
+            
             };
             if (button[i].id === 'add') {
                 textField.value = (button[i].value);
@@ -168,23 +165,105 @@ function equalsOperator() {
 
 
 //! TESTING AREA:
+function keyboardNumInput() {
+    document.addEventListener('keydown', (event) => {
+        if (!iterObj()) {
+            if (event.key === "0") {buttonInput.input1 = event.key}
+            else if (event.key === "1") {buttonInput.input1 = event.key}
+            else if (event.key === "2") {buttonInput.input1 = event.key}
+            else if (event.key === "3") {buttonInput.input1 = event.key}
+            else if (event.key === "4") {buttonInput.input1 = event.key}
+            else if (event.key === "5") {buttonInput.input1 = event.key}
+            else if (event.key === "6") {buttonInput.input1 = event.key}
+            else if (event.key === "7") {buttonInput.input1 = event.key}
+            else if (event.key === "8") {buttonInput.input1 = event.key}
+            else if (event.key === "9") {buttonInput.input1 = event.key}
+        } else {
+            if (event.key === "0") {buttonInput.input2 = event.key}
+            else if (event.key === "1") {buttonInput.input2 = event.key}
+            else if (event.key === "2") {buttonInput.input2 = event.key}
+            else if (event.key === "3") {buttonInput.input2 = event.key}
+            else if (event.key === "4") {buttonInput.input2 = event.key}
+            else if (event.key === "5") {buttonInput.input2 = event.key}
+            else if (event.key === "6") {buttonInput.input2 = event.key}
+            else if (event.key === "7") {buttonInput.input2 = event.key}
+            else if (event.key === "8") {buttonInput.input2 = event.key}
+            else if (event.key === "9") {buttonInput.input2 = event.key}  
+        };
+        // else if (event.key === "+") {return 'add'}
+        // else if (event.key === "-") {return 'subtract'}
+        // else if (event.key === "*") {return 'multiply'}
+        // else if (event.key === "/") {return 'divide'}
+    });
+};
 
-document.addEventListener('keydown', (event) => {
-    if (event.key == "0") {document.body.append("0")}
-    else if (event.key === "1") {return '1'}
-    else if (event.key === "2") {return '2'}
-    else if (event.key === "3") {return '3'}
-    else if (event.key === "4") {return '4'}
-    else if (event.key === "5") {return '5'}
-    else if (event.key === "6") {return '6'}
-    else if (event.key === "7") {return '7'}
-    else if (event.key === "8") {return '8'}
-    else if (event.key === "9") {return '9'}
-    else if (event.key === "+") {return 'add'}
-    else if (event.key === "-") {return 'subtract'}
-    else if (event.key === "*") {return 'multiply'}
-    else if (event.key === "/") {return 'divide'}
-});
 
 
+function numberInput() {
+    document.addEventListener('keydown', (event) => {
+        if (!iterObj()) {
+            if (event.key === "0") {buttonInput.input1.push(event.key)}
+            else if (event.key === "1") {buttonInput.input1.push(event.key)}
+            else if (event.key === "2") {buttonInput.input1.push(event.key)}
+            else if (event.key === "3") {buttonInput.input1.push(event.key)}
+            else if (event.key === "4") {buttonInput.input1.push(event.key)}
+            else if (event.key === "5") {buttonInput.input1.push(event.key)}
+            else if (event.key === "6") {buttonInput.input1.push(event.key)}
+            else if (event.key === "7") {buttonInput.input1.push(event.key)}
+            else if (event.key === "8") {buttonInput.input1.push(event.key)}
+            else if (event.key === "9") {buttonInput.input1.push(event.key)}
+            textField.value = buttonInput.input1.join("");
+        } else {
+            if (event.key === "0") {buttonInput.input2.push(event.key)}
+            else if (event.key === "1") {buttonInput.input2.push(event.key)}
+            else if (event.key === "2") {buttonInput.input2.push(event.key)}
+            else if (event.key === "3") {buttonInput.input2.push(event.key)}
+            else if (event.key === "4") {buttonInput.input2.push(event.key)}
+            else if (event.key === "5") {buttonInput.input2.push(event.key)}
+            else if (event.key === "6") {buttonInput.input2.push(event.key)}
+            else if (event.key === "7") {buttonInput.input2.push(event.key)}
+            else if (event.key === "8") {buttonInput.input2.push(event.key)}
+            else if (event.key === "9") {buttonInput.input2.push(event.key)}
+            textField.value = buttonInput.input2.join("");
+        };
+        if (event.key === '+') {
+            textField.value = ('+');
+            getCalc(buttonInput.operator);
+            buttonInput.operator = 'add';
+        };
+        if (event.key === '-') {
+            textField.value = ('-');
+            getCalc(buttonInput.operator);
+            buttonInput.operator = 'subtract';
+        };
+        if (event.key === '*') {
+            textField.value = ('x');
+            getCalc(buttonInput.operator);
+            buttonInput.operator = 'multiply';
+        };
+        if (event.key === '/') {
+            textField.value = ('/');
+            getCalc(buttonInput.operator);
+            buttonInput.operator = 'divide';
+        };
+        if (event.key === 'Enter') {
+            result = equalsOperator();
+            textField.value = result;
+            buttonInput.input1 = [result];
+            buttonInput.input2 = [];
+            return result;
+        };
+        if (button.id === 'clear') {
+            buttonInput = {input1: [], input2: []};
+            textField.value = 0;
+        };
+        console.log("");
+        console.log("buttonInput.input1: ", buttonInput.input1);
+        console.log("buttonInput.input2: ", buttonInput.input2);
+        console.log("buttonInput.operator: ", buttonInput.operator);
+        console.log("buttonInput Object: ", buttonInput);     
+    });                
+};
 
+clickInput();
+numberInput();
