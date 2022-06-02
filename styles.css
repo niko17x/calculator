@@ -25,3 +25,12 @@ button {
     padding: 15px;
     margin: 1.7px 0px;
 }
+
+.dynamicColor {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.8);
+    background: rgb(145, 92, 182);
+    border-radius: 4px;
+    font-weight: normal;
+    transition: all 0.2s ease-in-out;
+}

@@ -57,6 +57,40 @@ let ans = 0;
 let result = 0;
 
 
+
+// helper function to iterate through values inside object array:
+function iterObj() {
+    if ('operator' in buttonInput) {
+        return (true);
+    };
+};
+
+
+
+// function if user clicks on 'equals' operator (note: try changing this to a switch operator):
+// if user clicks equal button, code will take the operator and operate on both arrays:
+function equalsOperator() {
+    if (buttonInput.input1 || buttonInput.input2) { // => if input1 and input2 is NOT empty...
+        if ('operator' in buttonInput) { // check if 'operator' in the object array.
+            if (buttonInput.operator === 'add') { // check for type of operator.
+                return add(parseInt(buttonInput.input1.join("")), parseInt(buttonInput.input2.join("")));
+            };
+            if (buttonInput.operator === 'subtract') {
+                return subtract(parseInt(buttonInput.input1.join("")), parseInt(buttonInput.input2.join("")));
+            };
+            if (buttonInput.operator === 'multiply') {
+                return multiply(parseInt(buttonInput.input1.join("")), parseInt(buttonInput.input2.join("")));
+            };
+            if (buttonInput.operator === 'divide') {
+                return divide(parseInt(buttonInput.input1.join("")), parseInt(buttonInput.input2.join("")));
+            };
+        };
+    };
+    return ("Invalid");
+};
+
+
+// Gets the calculation for the operator user presses:
 function getCalc(operator) {
     if (Object.keys(buttonInput.input2).length > 0) {
         result = calculate(operator, (parseInt(buttonInput.input1.join(""))), (parseInt(buttonInput.input2.join(""))));
@@ -66,21 +100,23 @@ function getCalc(operator) {
     };
 };
 
-
+// Mouse click input:
 function clickInput() {
     for (let i=0; i<button.length; i++) {
         button[i].addEventListener('click', () => {
             if (button[i].value in numberRange) {
                 if (!iterObj()) {
-                    buttonInput.input1.push(parseInt(button[i].value)); // mouse click event.
+                    buttonInput.input1.push(button[i].value); // mouse click event.
                     textField.value = buttonInput.input1.join("");
                 } else {
-                    buttonInput.input2.push(parseInt(button[i].value));
+                    buttonInput.input2.push(button[i].value);
                     textField.value = buttonInput.input2.join("");
                 };
             
             };
             if (button[i].id === 'add') {
+                // const addOperator = document.getElementById('add');
+                // addOperator.addEventListener('click', (e) => {e.target.classList.add('dynamicColor')})
                 textField.value = (button[i].value);
                 getCalc(buttonInput.operator);
                 buttonInput.operator = 'add';
@@ -121,89 +157,12 @@ function clickInput() {
 };
 
 
-// keyboard event:
-/**
- * Press on number on keyboard.
- * Registers a return of the number associated with the keyboard press.
- * Number then gets stored inside buttonInput.input.
- * 
- */
-
-
-
-// helper function to iterate through values inside object array:
-function iterObj() {
-    if ('operator' in buttonInput) {
-        return (true);
-    };
-};
-
-
-
-// function if user clicks on 'equals' operator (note: try changing this to a switch operator):
-// if user clicks equal button, code will take the operator and operate on both arrays:
-function equalsOperator() {
-    if (buttonInput.input1 || buttonInput.input2) { // => if input1 and input2 is NOT empty...
-        if ('operator' in buttonInput) { // check if 'operator' in the object array.
-            if (buttonInput.operator === 'add') { // check for type of operator.
-                return add(parseInt(buttonInput.input1.join("")), parseInt(buttonInput.input2.join("")));
-            };
-            if (buttonInput.operator === 'subtract') {
-                return subtract(parseInt(buttonInput.input1.join("")), parseInt(buttonInput.input2.join("")));
-            };
-            if (buttonInput.operator === 'multiply') {
-                return multiply(parseInt(buttonInput.input1.join("")), parseInt(buttonInput.input2.join("")));
-            };
-            if (buttonInput.operator === 'divide') {
-                return divide(parseInt(buttonInput.input1.join("")), parseInt(buttonInput.input2.join("")));
-            };
-        };
-    };
-    return ("Invalid");
-};
-
-
-
-//! TESTING AREA:
-function keyboardNumInput() {
-    document.addEventListener('keydown', (event) => {
-        if (!iterObj()) {
-            if (event.key === "0") {buttonInput.input1 = event.key}
-            else if (event.key === "1") {buttonInput.input1 = event.key}
-            else if (event.key === "2") {buttonInput.input1 = event.key}
-            else if (event.key === "3") {buttonInput.input1 = event.key}
-            else if (event.key === "4") {buttonInput.input1 = event.key}
-            else if (event.key === "5") {buttonInput.input1 = event.key}
-            else if (event.key === "6") {buttonInput.input1 = event.key}
-            else if (event.key === "7") {buttonInput.input1 = event.key}
-            else if (event.key === "8") {buttonInput.input1 = event.key}
-            else if (event.key === "9") {buttonInput.input1 = event.key}
-        } else {
-            if (event.key === "0") {buttonInput.input2 = event.key}
-            else if (event.key === "1") {buttonInput.input2 = event.key}
-            else if (event.key === "2") {buttonInput.input2 = event.key}
-            else if (event.key === "3") {buttonInput.input2 = event.key}
-            else if (event.key === "4") {buttonInput.input2 = event.key}
-            else if (event.key === "5") {buttonInput.input2 = event.key}
-            else if (event.key === "6") {buttonInput.input2 = event.key}
-            else if (event.key === "7") {buttonInput.input2 = event.key}
-            else if (event.key === "8") {buttonInput.input2 = event.key}
-            else if (event.key === "9") {buttonInput.input2 = event.key}  
-        };
-        // else if (event.key === "+") {return 'add'}
-        // else if (event.key === "-") {return 'subtract'}
-        // else if (event.key === "*") {return 'multiply'}
-        // else if (event.key === "/") {return 'divide'}
-    });
-};
-
-
-
+// Keyboard number input:
 function numberInput() {
     document.addEventListener('keydown', (event) => {
         if (!iterObj()) {
             if (event.key === "0") {buttonInput.input1.push(event.key)}
-            else if (event.key === "1") {buttonInput.input1.push(event.key)}
+            else if (event.key === "1") {buttonInput.input1.push(parseInt(event.key))}
             else if (event.key === "2") {buttonInput.input1.push(event.key)}
             else if (event.key === "3") {buttonInput.input1.push(event.key)}
             else if (event.key === "4") {buttonInput.input1.push(event.key)}
@@ -265,5 +224,13 @@ function numberInput() {
     });                
 };
 
+
+
 clickInput();
 numberInput();
+
+//! Things left to do:
+// Color transition when user clicks/enters a symbol.
+// Option to erase the last number input for editing.
+// CSS styling to make it look better.
+// Clean up code structure.
